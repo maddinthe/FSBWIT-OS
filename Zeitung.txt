@@ -1,0 +1,25 @@
+	public static String text =
+		"Russland sei an Krieg nicht interessiert "+
+		"Russlands Präsident Wladimir Putin sieht nach den "+
+		"Minsker Friedensgesprächen für die Ostukraine eine "+
+		"Chance für eine schrittweise Normalisierung der Lage "+
+		"im Kriegsgebiet Donbass."+
+		" "+
+		"\"Wenn das Minsker Abkommen für eine Lösung des "+
+		"Konflikts in der Ostukraine erfüllt wird, dann bin "+
+		"ich überzeugt, dass die Situation sich schrittweise "+
+		"normalisiert\", sagte Putin. Russland sei wie Europa "+
+		"nicht an Krieg interessiert, betonte der Präsident "+
+		"nach Kreml-Angaben in einem Interview des "+
+		"Staatsfernsehens."+
+		" "+
+		"\"Ich denke, dass ein solch apokalyptisches Szenario "+
+		"wohl kaum möglich ist - und hoffe, dass es dazu nicht "+
+		"kommt\", sagte der Kremlchef. Demnach sehe Putin auch "+
+		"Anzeichen dafür, dass durch die Verhandlungen in "+
+		"Minsk allmählich wieder Vertrauen zwischen Russland, "+
+		"Deutschland und Frankreich entstehe. Er erklärte "+
+		"zudem, ein weiteres Treffen mit Deutschland, "+
+		"Frankreich und der Ukraine zum Ukraine-Konflikt sei "+
+		"nicht erforderlich. Er hoffe, dass die zuletzt in "+
+		"Minsk getroffenen Verabredungen umgesetzt würden.";
