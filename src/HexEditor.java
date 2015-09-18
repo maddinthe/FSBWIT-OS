@@ -15,10 +15,10 @@ public class HexEditor {
             byte[] b = new byte[16];
             int c = 0;
             int addr=0;
-            long maxAddr=f.length();
+            int maxAddr=((Long)f.length()).toString().length()-1;
             while ((c = fis.read(b)) != -1) {
                 String front=Integer.toHexString(addr).toUpperCase();
-                while (front.length()<6){
+                while (front.length()<maxAddr){
                     front=0+front;
                 }
                 System.out.print(front+": ");
