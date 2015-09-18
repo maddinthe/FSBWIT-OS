@@ -1,4 +1,5 @@
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -7,12 +8,14 @@ import java.io.IOException;
  */
 public class HexEditor {
     public static void main(String[] args) {
+        File f=new File("Download.png");
 
-        try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream("Download.png"))) {
+        try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(f))) {
 
             byte[] b = new byte[16];
             int c = 0;
             int addr=0;
+            long maxAddr=f.length();
             while ((c = fis.read(b)) != -1) {
                 String front=Integer.toHexString(addr).toUpperCase();
                 while (front.length()<6){
