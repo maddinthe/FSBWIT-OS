@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class HexEditor {
     public static void main(String[] args) {
         File f = new File("java-insel.jpg");
-
+        long start=System.currentTimeMillis();
         try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(f))) {
 
             byte[] b = new byte[16];
@@ -18,35 +18,34 @@ public class HexEditor {
             int addr = 0;
             int maxAddrLength = Long.toHexString(f.length()).length();
             while ((c = fis.read(b)) != -1) {
-                String front = Integer.toHexString(addr).toUpperCase();
+                StringBuilder front = new StringBuilder(Integer.toHexString(addr).toUpperCase());
                 while (front.length() < maxAddrLength) {
-                    front = 0 + front;
+                    front.insert(0,0);
                 }
-                System.out.print(front + ": ");
+                front.append(": ");
                 int count = 0;
                 for (int i = 0; i < c; i++) {
                     int hexb = b[i] & 255;
                     String hex = Integer.toHexString(hexb).toUpperCase();
                     if (hex.length() == 1) hex = 0 + hex;
-                    System.out.print(hex + " ");
+                    front.append(hex + " ");
                     count++;
                 }
                 while (count < 16) {
-                    System.out.print("   ");
+                    front.append("   ");
                     count++;
-                    Arrays.fill(b, (byte) 0);
+                    Arrays.fill(b, (byte) 0);//macht keinen sinn da
                 }
 
-                System.out.print(new String(b).replaceAll("[^\\p{Print}]", "."));
+               front.append(new String(b).replaceAll("[^\\p{Print}]", "."));
                 addr += 16;
-                System.out.println();
+                System.out.println(front);
             }
 
 
         } catch (IOException e) {
             System.out.println("Dateifehler");
         }
-
-
+        System.out.println(System.currentTimeMillis()-start);
     }
 }
