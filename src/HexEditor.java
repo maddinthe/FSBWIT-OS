@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class HexEditor {
     public static void main(String[] args) {
         File f = new File("java-insel.jpg");
-        long start=System.currentTimeMillis();
+        long start = System.currentTimeMillis();
         try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(f))) {
 
             byte[] b = new byte[16];
@@ -20,7 +20,7 @@ public class HexEditor {
             while ((c = fis.read(b)) != -1) {
                 StringBuilder front = new StringBuilder(Integer.toHexString(addr).toUpperCase());
                 while (front.length() < maxAddrLength) {
-                    front.insert(0,0);
+                    front.insert(0, 0);
                 }
                 front.append(": ");
                 int count = 0;
@@ -37,7 +37,7 @@ public class HexEditor {
                     Arrays.fill(b, (byte) 0);//macht keinen sinn da
                 }
 
-               front.append(new String(b).replaceAll("[^\\p{Print}]", "."));
+                front.append(new String(b).replaceAll("[^\\p{Print}]", "."));
                 addr += 16;
                 System.out.println(front);
             }
@@ -46,6 +46,6 @@ public class HexEditor {
         } catch (IOException e) {
             System.out.println("Dateifehler");
         }
-        System.out.println(System.currentTimeMillis()-start);
+        System.out.println(System.currentTimeMillis() - start);
     }
 }
