@@ -9,7 +9,7 @@ import java.util.Arrays;
  */
 public class HexEditor {
     public static void main(String[] args) {
-        File f = new File("java-insel.jpg");
+        File f = new File("danny.jpg");
         long start = System.currentTimeMillis();
         try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(f))) {
 
@@ -30,13 +30,15 @@ public class HexEditor {
                     if (hex.length() == 1) hex = 0 + hex;
                     front.append(hex + " ");
                     count++;
+
                 }
                 while (count < 16) {
                     front.append("   ");
                     count++;
-                    Arrays.fill(b, (byte) 0);//macht keinen sinn da
-                }
 
+                }
+                if (c<16)
+                    Arrays.fill(b, (byte) 0);
                 front.append(new String(b).replaceAll("[^\\p{Print}]", "."));
                 addr += 16;
                 System.out.println(front);
