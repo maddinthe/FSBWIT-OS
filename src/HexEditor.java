@@ -2,7 +2,6 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Created by mtheilen on 18.09.2015.
@@ -19,26 +18,22 @@ public class HexEditor {
             int maxAddrLength = Long.toHexString(f.length()).length();
             while ((c = fis.read(b)) != -1) {
                 StringBuilder front = new StringBuilder(Integer.toHexString(addr).toUpperCase());
-                while (front.length() < maxAddrLength) {
+                while (front.length() < maxAddrLength)
                     front.insert(0, 0);
-                }
+
                 front.append(": ");
-                int count = 0;
                 for (int i = 0; i < c; i++) {
                     int hexb = b[i] & 255;
                     String hex = Integer.toHexString(hexb).toUpperCase();
                     if (hex.length() == 1) hex = 0 + hex;
                     front.append(hex + " ");
-                    count++;
 
                 }
-                while (count < 16) {
+                while (c < 16) {
                     front.append("   ");
-                    count++;
+                    b[c++] = 0;
 
                 }
-                if (c<16)
-                    Arrays.fill(b, (byte) 0);
                 front.append(new String(b).replaceAll("[^\\p{Print}]", "."));
                 addr += 16;
                 System.out.println(front);
