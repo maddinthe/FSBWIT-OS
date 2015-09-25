@@ -3,12 +3,11 @@ import java.io.*;
 /**
  * Created by mtheilen on 18.09.2015.
  */
-public class HexEditor {
+public class HexEditorIn {
     public static void main(String[] args) {
         File f = new File("java-insel.jpg");
-        //long start = System.currentTimeMillis();
-        //StringBuilder test=new StringBuilder();
-        try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(f))) {
+        File out=new File("out.txt");
+        try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(f));BufferedWriter bw=new BufferedWriter(new FileWriter(out))) {
 
             byte[] b = new byte[16];
             int c = 0;
@@ -35,16 +34,14 @@ public class HexEditor {
                 front.append(" ");
                 front.append(new String(b).replaceAll("[^\\p{Print}]", "."));
                 addr += 16;
-                //test.append(front);
-                //test.append("\n");
-                System.out.println(front);
+                bw.append(front);
+                bw.newLine();
             }
 
 
         } catch (IOException e) {
             System.out.println("Dateifehler");
         }
-        //System.out.println(test);
-        //System.out.println(System.currentTimeMillis() - start);
+
     }
 }
