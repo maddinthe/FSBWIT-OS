@@ -1,4 +1,7 @@
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * Created by mtheilen on 18.09.2015.
@@ -6,8 +9,7 @@ import java.io.*;
 public class HexEditor {
     public static void main(String[] args) {
         File f = new File("java-insel.jpg");
-        //long start = System.currentTimeMillis();
-        //StringBuilder test=new StringBuilder();
+        long start = System.currentTimeMillis();
         try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(f))) {
 
             byte[] b = new byte[16];
@@ -28,17 +30,12 @@ public class HexEditor {
 
                 }
                 while (c < 16) {
-                    if (c<b.length)
-                        b=new byte[c];
                     front.append("   ");
-                    c++;
+                    b[c++] = 0;
 
                 }
-                front.append(" ");
                 front.append(new String(b).replaceAll("[^\\p{Print}]", "."));
                 addr += 16;
-                //test.append(front);
-                //test.append("\n");
                 System.out.println(front);
             }
 
@@ -46,7 +43,6 @@ public class HexEditor {
         } catch (IOException e) {
             System.out.println("Dateifehler");
         }
-        //System.out.println(test);
-        //System.out.println(System.currentTimeMillis() - start);
+        System.out.println(System.currentTimeMillis() - start);
     }
 }

@@ -27,10 +27,8 @@ public class HexEditorIn {
 
                 }
                 while (c < 16) {
-                    if (c<b.length)
-                        b=new byte[c];
                     front.append("   ");
-                    c++;
+                    b[c++] = 0;
 
                 }
                 front.append(" ");
