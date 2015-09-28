@@ -9,51 +9,43 @@ import java.util.List;
  */
 public class HexEditorInOut {
     public static void main(String[] args) {
-        HexEditorInOut hex=new HexEditorInOut();
-        File hexdump=new File("./Testdaten/HexEdit/hexdump.txt");
-        File eingabe=new File("./Testdaten/HexEdit/java-insel.jpg");
-        File ausgabe=new File("./Testdaten/HexEdit/HaOut.jpg");
-        hex.fileToHex(eingabe,hexdump);
-        hex.hexToFile(hexdump,ausgabe);
-
+        HexEditorInOut hex = new HexEditorInOut();
+        File hexdump = new File("./Testdaten/HexEdit/hexdump.txt");
+        File eingabe = new File("./Testdaten/HexEdit/java-insel.jpg");
+        File ausgabe = new File("./Testdaten/HexEdit/HaOut.jpg");
+        hex.fileToHex(eingabe, hexdump);
+        hex.hexToFile(hexdump, ausgabe);
 
 
     }
 
 
-
-    public  void hexToFile(File in, File out) {
-        try(BufferedReader br=new BufferedReader(new FileReader(in));BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(out))){
+    public void hexToFile(File in, File out) {
+        try (BufferedReader br = new BufferedReader(new FileReader(in)); BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(out))) {
 
             String read;
-            List<byte[]> bout=new ArrayList<>();
-            while ((read=br.readLine())!=null){
-                int start=read.indexOf(':');
-                read=read.substring(start+2,start+49).trim();
-                String[] split=read.split(" ");
-                byte[] toSave=new byte[split.length];
-                for (int i = 0; i <split.length; i++) {
-                    toSave[i]=(byte)Integer.parseInt(split[i],16);
+            List<byte[]> bout = new ArrayList<>();
+            while ((read = br.readLine()) != null) {
+                int start = read.indexOf(':');
+                read = read.substring(start + 2, start + 49).trim();
+                String[] split = read.split(" ");
+                byte[] toSave = new byte[split.length];
+                for (int i = 0; i < split.length; i++) {
+                    toSave[i] = (byte) Integer.parseInt(split[i], 16);
                 }
-                bout.add(toSave);
-
-
-
+                bos.write(toSave);
             }
-            for (byte[] b:bout)
-                bos.write(b);
-        }
-        catch (IOException e){
+
+        } catch (IOException e) {
             System.out.println("Dateifehler");
 
         }
 
 
-
     }
 
-    public void fileToHex(File in,File out) {
-        try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(in));BufferedWriter bw=new BufferedWriter(new FileWriter(out))) {
+    public void fileToHex(File in, File out) {
+        try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(in)); BufferedWriter bw = new BufferedWriter(new FileWriter(out))) {
 
             byte[] b = new byte[16];
             int c = 0;
