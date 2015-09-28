@@ -1,3 +1,5 @@
+package Hausaufgaben.HaHexEditor;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
