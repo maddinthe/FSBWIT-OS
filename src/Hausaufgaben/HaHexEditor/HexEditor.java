@@ -4,13 +4,15 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by mtheilen on 18.09.2015.
  */
 public class HexEditor {
     public static void main(String[] args) {
-        File f = new File("java-insel.jpg");
+        File f = new File("./Testdaten/HexEdit/Koala.bmp");
         long start = System.currentTimeMillis();
         try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(f))) {
 
@@ -18,6 +20,7 @@ public class HexEditor {
             int c = 0;
             int addr = 0;
             int maxAddrLength = Long.toHexString(f.length()).length();
+            Pattern p=Pattern.compile("[^\\p{Print}]");
             while ((c = fis.read(b)) != -1) {
                 StringBuilder front = new StringBuilder(Integer.toHexString(addr).toUpperCase());
                 while (front.length() < maxAddrLength)
@@ -36,7 +39,8 @@ public class HexEditor {
                     b[c++] = 0;
 
                 }
-                front.append(new String(b).replaceAll("[^\\p{Print}]", "."));
+                Matcher m=p.matcher(new String(b));
+                front.append(m.replaceAll("."));
                 addr += 16;
                 System.out.println(front);
             }
