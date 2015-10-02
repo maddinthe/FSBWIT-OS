@@ -11,7 +11,58 @@ import java.util.regex.Pattern;
  */
 public class BibelRA {
     public static void main(String[] args) {
+        umlautFinden();
 
+
+    }
+
+    public static void anFinden(){
+        try(BufferedReader br=new BufferedReader(new FileReader("./Testdaten/bibel.txt"))) {
+
+            Pattern p= Pattern.compile("\\b[aA]n\\w");
+            String zeile;
+            int i=0;
+            while ((zeile=br.readLine())!=null){
+                Matcher m=p.matcher(zeile);
+                while(m.find())i++;
+
+            }
+
+            System.out.println(i);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+    public static void umlautFinden(){
+        try(BufferedReader br=new BufferedReader(new FileReader("./Testdaten/bibel.txt"))) {
+
+            Pattern p= Pattern.compile("\\b([äöüÄÖÜ][a-zäöüß]+)|([A-Za-z]*[öäüß][a-zöäüß]*)");
+            String zeile;
+            int i=0;
+            while ((zeile=br.readLine())!=null){
+                Matcher m=p.matcher(zeile);
+                while(m.find()){i++;
+                System.out.println(m.group());
+                }
+            }
+
+            System.out.println(i);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public static void godFinden(){
         try(BufferedReader br =new BufferedReader(new FileReader("./Testdaten/bibel.txt"))){
 
             Pattern p= Pattern.compile("God");
@@ -32,5 +83,6 @@ public class BibelRA {
         }
 
     }
+
 
 }
