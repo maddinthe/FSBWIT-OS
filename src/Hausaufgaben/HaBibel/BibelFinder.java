@@ -25,7 +25,7 @@ public class BibelFinder {
         try (BufferedReader br = new BufferedReader(new FileReader(in))) {
             Map<String, Integer> woerter = new HashMap<>();
 
-            Pattern p = Pattern.compile("\\b[a-zA-Zäöüß]+");
+            Pattern p = Pattern.compile("\\b[a-zA-ZäöüßÄÖÜ]+");
             String zeile;
             Integer c = 0;
             while ((zeile = br.readLine()) != null) {
@@ -56,7 +56,12 @@ public class BibelFinder {
             }
             sb.append("Ingesamt kommen ");
             sb.append(worte.length);
-            sb.append(" Worte vor.");
+            sb.append(" unterschiedliche und ");
+            long anz = 0;
+            for (Integer i : woerter.values())
+                anz += i;
+            sb.append(anz);
+            sb.append(" Worte insgesamt vor.");
             System.out.println(sb);
 
 
