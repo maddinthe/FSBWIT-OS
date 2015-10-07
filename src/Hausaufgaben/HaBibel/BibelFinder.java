@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created by mtheilen on 02.10.2015.
- * Augabe wörter der Bibel nach häfigkeit sortiert inkl derer ausgeben *
+ * Augabe der Wörter der Bibel nach Häufigkeit sortiert und Ausgabe der Worte inkl deren Häufigkeit*
  */
 public class BibelFinder {
 
