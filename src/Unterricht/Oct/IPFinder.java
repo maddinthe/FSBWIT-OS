@@ -17,25 +17,30 @@ public class IPFinder {
     public static void main(String[] args) {
 
 
-    try(BufferedReader br= new BufferedReader(new FileReader("./Testdaten/neu.log"))){
-        String read;
-        Pattern p= Pattern.compile("((\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])\\.){3}(25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]\\d|\\d)");
-        List<String> ips=new LinkedList<>();
-        while ((read=br.readLine())!=null){
-            Matcher m=p.matcher(read);
-            while (m.find()){
-                ips.add(m.group());
+        try (BufferedReader br = new BufferedReader(new FileReader("./Testdaten/neu.log"))) {
+            String read;
+            Pattern p = Pattern.compile("((\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])\\.)((\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])\\.)((\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])\\.)(25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]\\d|\\d)");
+            List<String> ips = new LinkedList<>();
+            while ((read = br.readLine()) != null) {
+                Matcher m = p.matcher(read);
+                while (m.find()) {
+                    System.out.printf("%02X.%02X.%02X.%02X\n",
+                    Integer.parseInt(m.group(2)),
+                    Integer.parseInt(m.group(4)),
+                    Integer.parseInt(m.group(6)),
+                    Integer.parseInt(m.group(7)));
+
+
+                }
             }
+
+
+
+
+
+        } catch (IOException e) {
+            System.out.println("Dateifehler");
         }
-        Collections.sort(ips);
-        System.out.println(ips);
-        System.out.println(ips.size());
-
-
-    }
-    catch(IOException e){
-        System.out.println("Dateifehler");
-    }
 
 
     }
