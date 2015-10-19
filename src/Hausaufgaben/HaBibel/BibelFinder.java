@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created by mtheilen on 02.10.2015.
- * Augabe wörter der Bibel nach häfigkeit sortiert inkl derer ausgeben *
+ * Augabe der Wörter der Bibel nach Häufigkeit sortiert und Ausgabe der Worte inkl deren Häufigkeit*
  */
 public class BibelFinder {
 
@@ -25,7 +25,7 @@ public class BibelFinder {
         try (BufferedReader br = new BufferedReader(new FileReader(in))) {
             Map<String, Integer> woerter = new HashMap<>();
 
-            Pattern p = Pattern.compile("\\b[a-zA-Zäöüß]+");
+            Pattern p = Pattern.compile("\\b[a-zA-ZäöüßÄÖÜ]+");
             String zeile;
             Integer c = 0;
             while ((zeile = br.readLine()) != null) {
@@ -39,24 +39,40 @@ public class BibelFinder {
                 }
 
             }
-            String[] worte = woerter.keySet().toArray(new String[woerter.size()]);
-            Arrays.sort(worte, new Comparator<String>() {
-                public int compare(String o1, String o2) {
-                    int i = woerter.get(o2) - woerter.get(o1);
-                    if (i == 0) return o1.compareTo(o2);
-                    else return i;
+//            String[] worte = woerter.keySet().toArray(new String[woerter.size()]);
+//            Arrays.sort(worte, new Comparator<String>() {
+//                public int compare(String o1, String o2) {
+//                    int i = woerter.get(o2) - woerter.get(o1);
+//                    if (i == 0) return o1.compareTo(o2);
+//                    else return i;
+//                }
+//            });
+
+          List<Map.Entry<String,Integer>> list=new LinkedList<>(woerter.entrySet());
+            Collections.sort(list, new Comparator<Map.Entry<String,Integer>>() {
+
+                public int compare(Map.Entry<String,Integer> o1, Map.Entry<String,Integer> o2) {
+                    int i= o1.getValue()-o2.getValue();
+                    if (i==0)return o1.getKey().compareTo(o1.getKey());
+                    return i;
                 }
             });
+
             StringBuffer sb = new StringBuffer();
-            for (String s : worte) {
-                sb.append(s);
+            for (Map.Entry<String,Integer> s : list) {
+                sb.append(s.getKey());
                 sb.append(" kommt ");
-                sb.append(woerter.get(s));
+                sb.append(s.getValue());
                 sb.append(" mal vor,\n");
             }
             sb.append("Ingesamt kommen ");
-            sb.append(worte.length);
-            sb.append(" Worte vor.");
+            sb.append(list.size());
+            sb.append(" unterschiedliche und ");
+            long anz = 0;
+            for (Integer i : woerter.values())
+                anz += i;
+            sb.append(anz);
+            sb.append(" Worte insgesamt vor.");
             System.out.println(sb);
 
 

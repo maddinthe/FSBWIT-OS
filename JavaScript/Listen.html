@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listen</title>
+    <style>
+        div{
+            width: 49%;
+            display: inline-block;
+            vertical-align: top;
+        }
+        #aufgabe{
+            height: 100px;
+            overflow-y: hidden;
+        }
+        #aufgabe:target{
+            height:auto;
+        }
+        a{
+           text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div>
+
+
+<ul>
+    <li>Coffee</li>
+    <li>Tea</li>
+    <li>Milk</li>
+</ul>
+<ul style="list-style-type:circle">
+    css style="list-style-type:circle"
+    <li>Coffee</li>
+    <li>Tea</li>
+    <li>Milk</li>
+</ul>
+
+<ol type="1">
+    <li>Coffee</li>
+    <li>Tea</li>
+    <li>Milk</li>
+</ol>
+<ol type="A">
+    <li>Coffee</li>
+    <li>Tea</li>
+    <li>Milk</li>
+</ol>
+<ol type="A" reversed>
+    HTML 5 Attribute: type="A" reversed
+    <li>Coffee</li>
+    <li>Tea</li>
+    <li>Milk</li>
+</ol>
+<ol type="I">
+    <li>Coffee</li>
+    <li>Tea</li>
+    <li>Milk</li>
+</ol>
+<ol type="I" start="5">
+    HTML 5 Attribute: type="I" start="5"
+    <li>Coffee</li>
+    <li>Tea</li>
+    <li value="10">HTML Attribut value="10"</li>
+</ol>
+<ul>
+    <li>Coffee</li>
+    <li>Tea
+        <ul>
+            <li>Black tea</li>
+            <li>Green tea</li>
+        </ul>
+    </li>
+    <li>Milk</li>
+</ul>
+<h2>Horizontal List</h2>
+
+<ul>
+    <li style="display:inline-block">HTML</li>
+    <li style="display:inline-block">CSS</li>
+    <li style="display:inline-block">JavaScript</li>
+    <li style="display:inline-block">PHP</li>
+
+    <br/>
+    <br/>möglich mit &lt;li style="display:inline-block"&gt;
+</ul>
+
+<dl>
+    <h3>Beschreibung der Tags</h3>
+    <dt>&lt;ul&gt;</dt><dd>Definiert eine Unsortierte Liste</dd>
+    <dt>&lt;ol&gt;</dt><dd>Definiert eine Sortierte Liste</dd>
+    <dt>&lt;li&gt;</dt><dd>Definiert ein Listeneintrag</dd>
+    <dt>&lt;dl&gt;</dt><dd>Definiert eine beschreibungsliste</dd>
+    <dt>&lt;dt&gt;</dt><dd>Definiert einen zu beschreibenden Listeneintrag</dd>
+    <dt>&lt;dd&gt;</dt><dd>Definiert eine Beschreibung zu einem &lt;dt&gt;</dd>
+</dl>
+</div>
+<div id="aufgabe">
+    <a href="#aufgabe" id="link"><h1>Aufgabe</h1></a>
+    <p>Bauen sie folgende Liste nach</p>
+    <ol type="I" start="5">
+        <li>Hallo</li>
+        <li>Welt</li>
+        <li>dies</li>
+        <li value="10">ist</li>
+        <li>eine</li>
+        <li>doofe</li>
+        <li>Aufgabe</li>
+
+    </ol>
+</div>
+
+
+</body>
+</html>
