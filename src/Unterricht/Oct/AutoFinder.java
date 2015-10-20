@@ -15,8 +15,8 @@ import java.util.regex.Pattern;
  */
 public class AutoFinder {
     public static void main(String[] args) {
-        File[] autos = getAutoFiles("Y:\\3_XI\\XI_6\\302_SOP_OOP\\Autos\\");
-        System.out.println(autos.length);
+        List<File> autos = getAutoFiles("Y:\\3_XI\\XI_6\\302_SOP_OOP\\Autos\\");
+        System.out.println(autos.size());
         List<String> ausg = new ArrayList<>();
         for (File f : autos) {
             ausg.addAll(getAutoInfo(f));
@@ -32,7 +32,7 @@ public class AutoFinder {
     }
 
     public static List<String> getAutoInfo(File autos) {
-        Pattern p = Pattern.compile("(\\w{3,})(.)*\\n(.)*\\1((.)*\\n){0,12}(Finanzierung[, ]*Versicherung)$", Pattern.MULTILINE);
+        Pattern p = Pattern.compile("(^(.*)(DE( )?-( )?\\d{5} \\b\\w+\\b)|^(.*)\\n(DE( )?-( )?\\d{5} \\b\\w+\\b))[\\w\\W]*?(Finanzierung)", Pattern.MULTILINE);
         List<String> ret = new LinkedList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(autos))) {
             StringBuilder sb = new StringBuilder();
@@ -52,18 +52,18 @@ public class AutoFinder {
     }
 
 
-    public static File[] getAutoFiles(String dirPath) {
+    public static List<File> getAutoFiles(String dirPath) {
         return getAutoFiles(new File(dirPath));
     }
 
-    public static File[] getAutoFiles(File dir) {
+    public static List<File> getAutoFiles(File dir) {
         File[] dateien = dir.listFiles();
         List<File> autos = new LinkedList<>();
         Pattern p = Pattern.compile("(Autos_)(25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]\\d|\\d)\\b");
         for (File f : dateien)
             if (f.isFile() && (p.matcher(f.getName()).find()))
                 autos.add(f);
-        return autos.toArray(new File[autos.size()]);
+        return autos;
     }
 
 
