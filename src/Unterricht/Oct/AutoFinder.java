@@ -1,12 +1,9 @@
 package Unterricht.Oct;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -15,13 +12,35 @@ import java.util.regex.Pattern;
 public class AutoFinder {
     public static void main(String[] args) {
         List<String> ausg = autosToString(getAutoFiles("Y:\\3_XI\\XI_6\\302_SOP_OOP\\Autos\\"));
-        ausg=autoBundler(ausg);
-        System.out.println(ausg.get(0));
-        System.out.println("-----------------------------------");
-        System.out.println(ausg.get(27));
-        System.out.println("-----------------------------------");
-        System.out.println(ausg.get(51));
+        ausg = autoBundler(ausg);
+        for (String s:ausg)
+            System.out.println(s);
 
+        autoLister(ausg);
+
+
+    }
+
+
+    public static void autoLister(List<String> autos) {
+        for (String autoS : autos) {
+            StringBuilder out=new StringBuilder("Auto: ");
+            String[] zerlegt= autoS.split("\n");
+            out.append(zerlegt[0]);
+            out.append("\n");
+            out.append("Ort: ");
+            out.append(zerlegt[1]);
+            out.append("\n");
+            out.append("Extras: ");
+            for (int i = 2; i < zerlegt.length; i++) {
+                out.append(zerlegt[i]);
+                out.append(", ");
+            }
+            out.append("\n");
+
+
+            System.out.println(out);
+        }
 
     }
 
@@ -38,11 +57,10 @@ public class AutoFinder {
                 toSave.append("\n");
                 for (int i = index + 1; ; i++) {
                     String zeile = autos.get(i);
-                    if (zeile.startsWith("Finanzierung")){
+                    if (zeile.startsWith("Finanzierung")) {
+                        index = i;
                         break;
-                    }
-
-                    else {
+                    } else {
                         toSave.append(zeile);
                         toSave.append("\n");
                     }
@@ -54,7 +72,6 @@ public class AutoFinder {
 
         return ret;
     }
-
 
     public static List<String> autosToString(List<File> autos) {
         List<String> ret = new LinkedList<>();
@@ -74,28 +91,6 @@ public class AutoFinder {
         return ret;
     }
 
-
-    public static List<String> getAutoInfo(File autos) {
-        Pattern p = Pattern.compile("(^(.*)(DE( )?-( )?\\d{5} \\b\\w+\\b)|^(.*)\\n(DE( )?-( )?\\d{5} \\b\\w+\\b))[\\w\\W]*?(Finanzierung)", Pattern.MULTILINE);
-        List<String> ret = new LinkedList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(autos))) {
-            StringBuilder sb = new StringBuilder();
-            String s;
-            while ((s = br.readLine()) != null) {
-                sb.append(s);
-                sb.append("\n");
-            }
-            Matcher m = p.matcher(sb);
-            while (m.find()) {
-                ret.add(m.group());
-            }
-        } catch (IOException e) {
-            System.out.println("Dateifehler");
-        }
-        return ret;
-    }
-
-
     public static List<File> getAutoFiles(String dirPath) {
         return getAutoFiles(new File(dirPath));
     }
@@ -109,6 +104,4 @@ public class AutoFinder {
                 autos.add(f);
         return autos;
     }
-
-
 }
