@@ -1,9 +1,8 @@
 package Unterricht.Oct;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import com.sun.org.apache.xpath.internal.SourceTree;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,21 +14,66 @@ import java.util.regex.Pattern;
  */
 public class AutoFinder {
     public static void main(String[] args) {
-        List<File> autos = getAutoFiles("Y:\\3_XI\\XI_6\\302_SOP_OOP\\Autos\\");
-        System.out.println(autos.size());
-        List<String> ausg = new ArrayList<>();
-        for (File f : autos) {
-            ausg.addAll(getAutoInfo(f));
-        }
+        List<String> ausg = autosToString(getAutoFiles("Y:\\3_XI\\XI_6\\302_SOP_OOP\\Autos\\"));
+        ausg=autoBundler(ausg);
+        System.out.println(ausg.get(0));
+        System.out.println("-----------------------------------");
+        System.out.println(ausg.get(27));
+        System.out.println("-----------------------------------");
+        System.out.println(ausg.get(51));
 
-
-        for (String s : ausg) {
-            System.out.println(s);
-            System.out.println("--------------------------------------------------------------------");
-        }
-        System.out.println(ausg.size());
 
     }
+
+    public static List<String> autoBundler(List<String> autos) {
+        List<String> ret = new LinkedList<>();
+        autos = new ArrayList<String>(autos);
+        for (int index = 0; index < autos.size(); index++) {
+            String ort = autos.get(index);
+            if (ort.matches("^DE( )?-( )?\\d{5} .*$")) {
+                StringBuilder toSave = new StringBuilder();
+                toSave.append(autos.get(index - 1));
+                toSave.append("\n");
+                toSave.append(ort);
+                toSave.append("\n");
+                for (int i = index + 1; ; i++) {
+                    String zeile = autos.get(i);
+                    if (zeile.startsWith("Finanzierung")){
+                        break;
+                    }
+
+                    else {
+                        toSave.append(zeile);
+                        toSave.append("\n");
+                    }
+                }
+                ret.add(toSave.toString());
+            }
+        }
+
+
+        return ret;
+    }
+
+
+    public static List<String> autosToString(List<File> autos) {
+        List<String> ret = new LinkedList<>();
+
+        for (File f : autos) {
+            try (BufferedReader br = new BufferedReader(new FileReader(f))) {
+                String read;
+                while ((read = br.readLine()) != null) {
+                    ret.add(read);
+                }
+
+            } catch (IOException e) {
+                System.out.println("Dateifehler bei " + f.getName());
+                ;
+            }
+        }
+        return ret;
+    }
+
 
     public static List<String> getAutoInfo(File autos) {
         Pattern p = Pattern.compile("(^(.*)(DE( )?-( )?\\d{5} \\b\\w+\\b)|^(.*)\\n(DE( )?-( )?\\d{5} \\b\\w+\\b))[\\w\\W]*?(Finanzierung)", Pattern.MULTILINE);
