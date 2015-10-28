@@ -33,6 +33,12 @@ public class AutoFinder {
         Auto test=autos.get((int)(Math.random()*autos.size()));
         System.out.println(String.format("%s,Extras: %s",test,test.extras));
 
+        int preis=0;
+        for (Auto a:autos){
+            preis+=a.getPreis();
+        }
+        System.out.println(String.format("Gesamtpreis:%d€",preis));
+
 
     }
 
