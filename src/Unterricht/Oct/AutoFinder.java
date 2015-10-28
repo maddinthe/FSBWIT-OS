@@ -1,7 +1,6 @@
 package Unterricht.Oct;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,17 +8,30 @@ import java.util.regex.Pattern;
 /**
  * Created by mtheilen on 20.10.2015.
  */
+
+
 public class AutoFinder {
+
+
+    public static Comparator<Auto> AUTOVERGLEICHER=new Comparator<Auto>(){
+        public int compare(Auto o1, Auto o2) {
+            return o1.compareTo(o2);
+        }
+    };
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
         AutoFinder af = new AutoFinder();
         List<String> ausg = af.autosToString(af.getAutoFiles("Y:\\3_XI\\XI_6\\302_SOP_OOP\\Autos\\"));
         ausg = af.autoBundler(ausg);
-        //ausg.forEach(System.out::println);
         List<Auto> autos = af.autoLister(ausg);
+        Set<Auto> einzelautos=new HashSet<>(autos);
+        autos=new ArrayList<>(einzelautos);
+        autos.sort(AUTOVERGLEICHER);
         autos.forEach(System.out::println);
         System.out.println(autos.size());
         System.out.println(System.currentTimeMillis() - start);
+        Auto fehler=autos.get(autos.size()-18);
+        System.out.println(fehler);
 
 
     }
@@ -27,16 +39,17 @@ public class AutoFinder {
 
     public List<Auto> autoLister(List<String> autos) {
         Pattern ezP = Pattern.compile("EZ\\s?([01]\\d/[12]\\d{3})");
-        Pattern huP = Pattern.compile("HU\\s?((0\\d)|(1[0-2])/(1\\d{3})|(20[01]\\d))");
+        Pattern huP = Pattern.compile("HU( )?(([nN](EU|eu))|((0\\d)|1[0-2])/\\d{4})");
         Pattern anbieterP = Pattern.compile("[Hh]ändler|[Pp]rivat");
         Pattern artP = Pattern.compile("(Kleinwagen|Kombi|Limousine|Van|Minibus)");
         Pattern leistungP = Pattern.compile("\\d{2,3}\\s?[kK][wW]\\s?\\(?\\d{2,3}\\s?[pP][sS]\\)?");
         Pattern kmP = Pattern.compile("[^/](\\d{0,3}(\\.)?\\d{3})\\s?[kK][mM]");
-        Pattern preisP = Pattern.compile("(\\d{0,3}(\\.)?\\d{3})\\s?€");
+        Pattern preisP = Pattern.compile("(((\\d{1,3}.)?\\d{3})|\\d{1,2})( )?€");
         Pattern kraftstoffP = Pattern.compile("([dD]iesel|[Bb]enzin|([Aa]uto|[Ee]rd)gas|[Hh]ybrid)");
         Pattern schaltungP = Pattern.compile("\\w*getriebe");
-        Matcher ezM, huM, anbieterM, artM, leistungM, kmM, preisM, kraftstoffM, schaltungM;
-        String nameS, ortS, ezS = null, huS = null, anbieterS = null, artS = null, leistungS = null, kmS = null, preisS = null, kraftstoffS = null, schaltungS = null;
+        Pattern unfallP=Pattern.compile("\\b[Uu]nfall[a-z]+\\b");
+        Matcher ezM, huM, anbieterM, artM, leistungM, kmM, preisM, kraftstoffM, schaltungM,unfallM;
+        String nameS, ortS, ezS = null, huS = null, anbieterS = null, artS = null, leistungS = null, kmS = null, preisS = null, kraftstoffS = null, schaltungS = null,unfallS=null;
         List<Auto> ret = new LinkedList<>();
         for (String autoS : autos) {
             String[] zerlegt = autoS.split("\n");
@@ -49,7 +62,7 @@ public class AutoFinder {
                 autoS=autoS.replace(ezM.group(), "");
             }
             if ((huM = huP.matcher(autoS)).find()) {
-                huS = huM.group(1);
+                huS = huM.group(2);
                 autoS=autoS.replace(huM.group(), "");
             }
             if ((anbieterM = anbieterP.matcher(autoS)).find()) {
@@ -80,8 +93,12 @@ public class AutoFinder {
                 schaltungS = schaltungM.group();
                 autoS=autoS.replace(schaltungS, "");
             }
-            Auto toSave = new Auto(null, ortS, nameS, ezS, huS, anbieterS, artS, kmS, leistungS, preisS, kraftstoffS, schaltungS);
-            System.out.println(Arrays.toString(autoS.replaceAll("[, ]", "").replaceAll("(?m)^\\s+$","").replaceAll("\n", " ").trim().split("[, ]")));
+            if ((unfallM=unfallP.matcher(autoS)).find()){
+                unfallS=unfallM.group();
+                autoS.replaceAll(unfallS,"");
+            }
+            Auto toSave = new Auto(unfallS, ortS, nameS, ezS, huS, anbieterS, artS, kmS, leistungS, preisS, kraftstoffS, schaltungS);
+            toSave.setExtras(Arrays.asList(autoS.replaceAll("[, ]", "").replaceAll("(?m)^\\s+$", "").replaceAll("\n", " ").trim().split("[, ]")));
             ret.add(toSave);
         }
         return ret;
@@ -148,7 +165,7 @@ public class AutoFinder {
         return autos;
     }
 
-    public class Auto {
+    public class Auto implements Comparable<Auto> {
         String ort;
         String name;
         String ez;
@@ -190,7 +207,7 @@ public class AutoFinder {
         }
 
         public String toString() {
-            return (String.format("%s, %s, %dkm, %d€", name, ort, km, preis));
+            return (String.format("%s, %s, %dkm, %d€,EZ %s ,HU %s,%s ", name, ort, km, preis,ez,hu,unfall));
         }
 
         public String getOrt() {
@@ -295,6 +312,35 @@ public class AutoFinder {
 
         public void setExtras(List<String> extras) {
             this.extras = extras;
+        }
+
+
+        public int compareTo(Auto o) {
+            int ret=this.name.compareTo(o.name);
+            if(ret==0){
+                ret=this.km-o.km;
+                if(ret==0){
+                    ret=ez.compareTo(o.ez);
+                    if(ret==0)
+                        ret=this.preis-o.preis;
+                }
+            }
+
+
+            return ret;
+        }
+
+
+        public int hashCode() {
+            return name.hashCode()^km^ez.hashCode();
+        }
+
+
+        public boolean equals(Object obj) {
+            if (obj==null) return false;
+            if (!(obj instanceof Auto)) return false;
+            Auto o=(Auto)obj;
+            return (name.equals(o.name)&&km==o.km&&ez.equals(o.ez));
         }
     }
 
