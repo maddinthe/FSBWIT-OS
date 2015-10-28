@@ -30,8 +30,8 @@ public class AutoFinder {
         autos.forEach(System.out::println);
         System.out.println(autos.size());
         System.out.println(System.currentTimeMillis() - start);
-        Auto fehler=autos.get(autos.size()-18);
-        System.out.println(fehler);
+        Auto test=autos.get((int)(Math.random()*autos.size()));
+        System.out.println(String.format("%s,Extras: %s",test,test.extras));
 
 
     }
@@ -46,7 +46,7 @@ public class AutoFinder {
         Pattern kmP = Pattern.compile("[^/](\\d{0,3}(\\.)?\\d{3})\\s?[kK][mM]");
         Pattern preisP = Pattern.compile("(((\\d{1,3}.)?\\d{3})|\\d{1,2})( )?€");
         Pattern kraftstoffP = Pattern.compile("([dD]iesel|[Bb]enzin|([Aa]uto|[Ee]rd)gas|[Hh]ybrid)");
-        Pattern schaltungP = Pattern.compile("\\w*getriebe");
+        Pattern schaltungP = Pattern.compile("\\w*getriebe|Automatik");
         Pattern unfallP=Pattern.compile("\\b[Uu]nfall[a-z]+\\b");
         Matcher ezM, huM, anbieterM, artM, leistungM, kmM, preisM, kraftstoffM, schaltungM,unfallM;
         String nameS, ortS, ezS = null, huS = null, anbieterS = null, artS = null, leistungS = null, kmS = null, preisS = null, kraftstoffS = null, schaltungS = null,unfallS=null;
@@ -95,7 +95,7 @@ public class AutoFinder {
             }
             if ((unfallM=unfallP.matcher(autoS)).find()){
                 unfallS=unfallM.group();
-                autoS.replaceAll(unfallS,"");
+                autoS=autoS.replaceAll(unfallS,"");
             }
             Auto toSave = new Auto(unfallS, ortS, nameS, ezS, huS, anbieterS, artS, kmS, leistungS, preisS, kraftstoffS, schaltungS);
             toSave.setExtras(Arrays.asList(autoS.replaceAll("[, ]", "").replaceAll("(?m)^\\s+$", "").replaceAll("\n", " ").trim().split("[, ]")));
