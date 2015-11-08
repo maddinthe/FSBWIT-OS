@@ -1,7 +1,9 @@
 package Hausaufgaben.AutoLister;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by Martin on 06.11.2015.
@@ -18,14 +20,16 @@ public class AutoFinderGui {
 
 
     public static void gui(List<AutoFinder.Auto> liste) {
+        boolean gedrueckt=false;
         JFrame fenster = new JFrame("Autoliste");
-        fenster.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         AutoFinder.Auto[] autoArr = liste.toArray(new AutoFinder.Auto[liste.size()]);
         JList<AutoFinder.Auto> aListe = new JList<>(autoArr);
         JScrollPane listeSrcoller = new JScrollPane(aListe);
-        fenster.add(listeSrcoller);
+        fenster.add(listeSrcoller, BorderLayout.CENTER);
 
-        fenster.setSize(1000, 500);
+        fenster.setSize((int)aListe.getPreferredSize().getWidth()+50,500);
+        fenster.isAlwaysOnTop();
         fenster.setVisible(true);
 
         Scanner s = new Scanner(System.in);
@@ -33,6 +37,7 @@ public class AutoFinderGui {
         while (true) {
             System.out.println("Ausgabe sortiert nach: 1 = Name, 2 = KM, 3=Ort, 4=Ende");
             String eing = s.next();
+
             switch (eing.charAt(0)) {
                 case '1': {
                     Arrays.sort(autoArr);
