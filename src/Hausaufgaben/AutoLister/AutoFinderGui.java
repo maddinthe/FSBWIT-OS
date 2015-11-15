@@ -2,8 +2,8 @@ package Hausaufgaben.AutoLister;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class AutoFinderGui {
         JScrollPane listeSrcoller = new JScrollPane(aListe);
         fenster.add(listeSrcoller, BorderLayout.CENTER);
 
-        fenster.setSize((int)aListe.getPreferredSize().getWidth()+50,500);
+        fenster.setSize((int) aListe.getPreferredSize().getWidth() + 50, 500);
         fenster.isAlwaysOnTop();
         fenster.setVisible(true);
 
@@ -64,57 +64,63 @@ public class AutoFinderGui {
     }
 
 
-    public static void gui2(List<AutoFinder.Auto> autoListe){
+    public static void gui2(List<AutoFinder.Auto> autoListe) {
         JFrame fenster = new JFrame("Autos");
         fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        AutoFinder.Auto[] autos=autoListe.toArray(new AutoFinder.Auto[autoListe.size()]);
-        JList<AutoFinder.Auto> aListe=new JList<>(autos);
-        JScrollPane scrollP=new JScrollPane(aListe);
+        AutoFinder.Auto[] autos = autoListe.toArray(new AutoFinder.Auto[autoListe.size()]);
+        JList<AutoFinder.Auto> aListe = new JList<>(autos);
+        JScrollPane scrollP = new JScrollPane(aListe);
         fenster.add(scrollP, BorderLayout.CENTER);
 
-        JRadioButton km=new JRadioButton("KM");
-        JRadioButton ort=new JRadioButton("Ort");
-        JRadioButton name=new JRadioButton("Name");
-        ButtonGroup bg=new ButtonGroup();
+        JRadioButtonMenuItem km = new JRadioButtonMenuItem("KM");
+        JRadioButtonMenuItem ort = new JRadioButtonMenuItem("Ort");
+        JRadioButtonMenuItem name = new JRadioButtonMenuItem("Name");
+        JRadioButtonMenuItem unsortiert = new JRadioButtonMenuItem("unsortiert");
+        unsortiert.setSelected(true);
+        JMenuBar jmb = new JMenuBar();
+        JMenu jm = new JMenu("Sortierung");
+        jmb.add(jm);
+        fenster.setJMenuBar(jmb);
+        ButtonGroup bg = new ButtonGroup();
         bg.add(km);
         bg.add(ort);
         bg.add(name);
+        bg.add(unsortiert);
+        jm.add(km);
+        jm.add(ort);
+        jm.add(name);
+        jm.add(unsortiert);
 
-        ItemListener il=new ItemListener() {
 
-            public void itemStateChanged(ItemEvent e) {
-                if(((JRadioButton)e.getItem()).isSelected()){
-                String btnT =((JRadioButton)e.getItem()).getText();
-                if (btnT=="KM"){
-                   Arrays.sort(autos, AutoFinder.Auto.KM);
-                }else if(btnT=="Ort"){
-                    Arrays.sort(autos,AutoFinder.Auto.ORT);
-                }else if (btnT=="Name"){
+        ActionListener al = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JRadioButtonMenuItem evI = (JRadioButtonMenuItem) e.getSource();
+                if (evI.getText() == "KM") {
+                    Arrays.sort(autos, AutoFinder.Auto.KM);
+
+                } else if (evI.getText() == "Ort") {
+                    Arrays.sort(autos, AutoFinder.Auto.ORT);
+
+                } else if (evI.getText() == "Name") {
                     Arrays.sort(autos);
+
                 }
+                unsortiert.setEnabled(false);
                 aListe.setListData(autos);
 
-                }
+
             }
         };
-        km.addItemListener(il);
-        ort.addItemListener(il);
-        name.addItemListener(il);
+        km.addActionListener(al);
+        ort.addActionListener(al);
+        name.addActionListener(al);
 
-        JPanel jp=new JPanel();
-        JLabel jl=new JLabel("Sortieren nach: ");
-        jp.add(jl);
-        jp.add(km);
-        jp.add(ort);
-        jp.add(name);
-        fenster.add(jp,BorderLayout.SOUTH);
 
-        fenster.setSize((int)aListe.getPreferredSize().getWidth()+50,500);
+        fenster.setSize((int) aListe.getPreferredSize().getWidth() + 50, 500);
         fenster.setVisible(true);
 
 
     }
-
 
 
 }
