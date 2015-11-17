@@ -1,7 +1,5 @@
 package Unterricht.Nov;
 
-import com.sun.prism.paint.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Color;
@@ -26,7 +24,8 @@ public class AlTest {
             public void actionPerformed(ActionEvent e) {
                 if (jtp.getBackground() == Color.RED)
                     jtp.setBackground(null);
-                else jtp.setBackground(Color.RED);
+                else
+                    jtp.setBackground(Color.RED);
             }
         });
 

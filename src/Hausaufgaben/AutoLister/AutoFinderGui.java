@@ -105,7 +105,7 @@ public class AutoFinderGui {
                     Arrays.sort(autos);
 
                 }
-                unsortiert.setEnabled(false);
+                if(unsortiert.isEnabled())unsortiert.setEnabled(false);
                 aListe.setListData(autos);
 
 
