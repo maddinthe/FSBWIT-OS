@@ -78,13 +78,32 @@ public class SchiebePuzzle implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        if(firstClick){
-            firstClick=false;
-            buttons[0].setIcon(null);
-        }
-        int pos=Integer.parseInt(e.getActionCommand());
-        switchButton(pos);
+        if (firstClick) {
+            firstClick = false;                     // firstClick = false setzen, da der erste Zug gemacht wurde
+            lastIcon = buttons[0].getIcon();        // lastIcon festlegen => Auf das Feld oben links, wo das Bild "entfernt" wird
+            buttons[0].setIcon(null);               // buttons an der Stelle 0 (oben links) auf null setzen, damit das Bildchen "weg" ist
+            for (int i=0; i<1000; i++) {              // Schleife Bildverschiebung (Bildverschiebungen, damit das Spiel beginnen kann)
+                // => Kleine Zahl = wenige Verschiebungen und leichtes loesen!
+                int zufall = (int)(Math.random()*XX*YY);    // Zufallszahl/zug - Erzeugung
+                switchButton(zufall);                       // Die Zuege durchfuehren
+            }
+            while (lastButton % XX != 0) {      // Sorgt dafuer, dass das leere Feld ganz links ist --> Spaltenverschiebung
+                switchButton(lastButton-1);         // "Berechnung" --> lastButton 'geteilt durch' XX
+            }                                       //                  Wenn RESTWERT != 0  =>  switchButton nochmal aufrufen
 
+            while(lastButton / XX != 0){        // Sorgt dafuer, dassd das leere Feld ganz oben ist --> Zeilenverschiebung
+                switchButton(lastButton-XX);        // "Berechnung" --> lastButton 'geteilt durch' XX
+            }                                       //                  Wenn Ergebnis != 0  =>  switchButton nochmal aufrufen
+        }
+        else {      // "Methode" zum Beenden des Spieles / feststellen, dass das Bild komplett ist
+            int pos = Integer.parseInt(e.getActionCommand());   //
+            switchButton(pos);
+            if (isDone()) {
+                buttons[0].setIcon(lastIcon);
+                firstClick = true;
+            }
+
+        }
 
     }
 }
