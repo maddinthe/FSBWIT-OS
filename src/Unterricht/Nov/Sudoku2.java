@@ -95,11 +95,7 @@ public class Sudoku2 {
 
         jf.add(south, BorderLayout.SOUTH);
 
-        //blatest
-        //blubber
-
-
-        jf.pack();
+        jf.setSize(600,800);
         jf.setVisible(true);
     }
 }
