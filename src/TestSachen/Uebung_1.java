@@ -88,14 +88,13 @@ public class Uebung_1 {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try (BufferedReader br = new BufferedReader(new FileReader(eingabeName.getText()))) {
-                    StringBuilder sb = new StringBuilder();
+                    jta.setText("");
                     String zeile;
                     while ((zeile = br.readLine()) != null) {
-                        sb.append(zeile);
-                        sb.append('\n');
+                        jta.append(zeile);
+                        jta.append("\n");
 
                     }
-                    jta.setText(sb.toString());
 
                 } catch (IOException e1) {
                     JOptionPane.showMessageDialog(fenster,"Lesefehler","datein nicht gefunden",JOptionPane.ERROR_MESSAGE);

@@ -1,0 +1,39 @@
+p{
+    margin: 0;
+    padding: 0;
+}
+#blubb{
+    background-color: lightgrey;
+    padding: 5px;
+    width: 400px;
+    height: 400px;
+}
+
+div{
+    border-radius: 10px;
+}
+div div{
+    box-sizing: border-box;
+    font-size: 30px;
+    font-family: sans-serif;
+    background-color: white;
+    text-align: center;
+    width: 90px;
+    height: 90px;
+    margin: 5px;
+    padding: 30px 0;
+    float: left;
+}
+
+.gelb{
+    background-color: yellow;
+}
+.blau{
+    background-color: blue;
+}
+.rosa{
+    background-color: pink;
+}
+.orange{
+    background-color: orange;
+}
