@@ -1,6 +1,7 @@
 package Unterricht.Dez;
 
 import javax.swing.*;
+import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import java.awt.*;
 import java.util.*;
@@ -62,5 +63,35 @@ public class ListTest {
         public void removeListDataListener(ListDataListener l) {
             ldls.remove(l);
         }
+        public void add(int index, E element){
+            daten.add(index, element);
+            for (ListDataListener l:ldls){
+                l.intervalAdded(new ListDataEvent(this, ListDataEvent.INTERVAL_ADDED,index,index));
+            }
+        }
+        public void add(E element){
+            daten.add(element);
+            for (ListDataListener l:ldls) {
+                l.intervalAdded(new ListDataEvent(this, ListDataEvent.INTERVAL_ADDED, daten.size(), daten.size()));
+
+            }
+        }
+
+        public void remove(int index){
+            daten.remove(index);
+            for(ListDataListener l:ldls){
+                l.intervalRemoved(new ListDataEvent(this, ListDataEvent.INTERVAL_REMOVED, index, index));
+            }
+
+
+        }
+        public void clear(){
+            int i=daten.size()-1;
+            daten.clear();
+            for(ListDataListener l:ldls){
+                l.intervalRemoved(new ListDataEvent(this,ListDataEvent.INTERVAL_REMOVED,0,i));
+            }
+        }
+
     }
 }
