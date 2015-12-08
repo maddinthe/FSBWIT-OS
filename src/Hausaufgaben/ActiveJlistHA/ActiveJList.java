@@ -31,7 +31,7 @@ public class ActiveJList<E> extends JList {
 
 
 
-    public class MyListModel<E> implements ListModel{
+    public class MyListModel<E> implements ListModel<E>{
         private ArrayList<E> daten=new ArrayList<>();
         private ArrayList<ListDataListener> ldls=new ArrayList<>();
 
@@ -41,7 +41,7 @@ public class ActiveJList<E> extends JList {
         }
 
         @Override
-        public Object getElementAt(int index) {
+        public E getElementAt(int index) {
             return daten.get(index);
         }
 

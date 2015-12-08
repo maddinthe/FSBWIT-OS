@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
 
@@ -11,12 +13,13 @@ import java.util.List;
  * Created by mtheilen on 01.12.2015.
  */
 public class ListTest {
-
+    private int i=0;
     public static void main(String[] args) {
         new ListTest();
     }
 
     public ListTest(){
+
         JFrame fenster =new JFrame("ListTest");
         fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JButton add=new JButton("ADD");
@@ -25,14 +28,20 @@ public class ListTest {
 
         MyListModel<Integer> liste=new MyListModel<Integer>();
 
-        for (int i = 0; i <20 ; i++) {
+        add.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                liste.add(i++);
+            }
+        });
+
+        for (; i <20 ; i++) {
             liste.daten.add(i);
         }
 
         JList<Integer> jListe=new JList<>(liste);
         JScrollPane jsp=new JScrollPane(jListe);
         fenster.add(jsp);
-
 
 
 
@@ -72,7 +81,7 @@ public class ListTest {
         public void add(E element){
             daten.add(element);
             for (ListDataListener l:ldls) {
-                l.intervalAdded(new ListDataEvent(this, ListDataEvent.INTERVAL_ADDED, daten.size(), daten.size()));
+                l.intervalAdded(new ListDataEvent(this, ListDataEvent.INTERVAL_ADDED, daten.size()-1, daten.size()-1));
 
             }
         }
