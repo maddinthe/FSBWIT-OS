@@ -15,7 +15,7 @@ public class GebTagFinder {
     public GebTagFinder(){
         JFrame jf=new JFrame("Geburtstagsfinder");
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jf.setLayout(new GridLayout(1,3));
+        jf.setLayout(new FlowLayout());
         GregorianCalendar cal=new GregorianCalendar();
         DateFormat df=DateFormat.getDateInstance(DateFormat.MEDIUM);
         JTextField datum=new JTextField(df.format(cal.getTime()));
