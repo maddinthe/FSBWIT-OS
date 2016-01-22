@@ -40,17 +40,13 @@ public class GebTagFinder {
                     JOptionPane.showMessageDialog(jf, "Datum hat Falsches Format: DD.MM.YYYY", "Datumsfehler", JOptionPane.ERROR_MESSAGE);
                 }
                 tag.setText(tage[cal.get(GregorianCalendar.DAY_OF_WEEK)]);
+                datum.setText(df.format(cal.getTime()));
                 jf.pack();
             }
-
-            ;
-
-
         });
         jf.add(datum);
         jf.add(ok);
         jf.add(tag);
-
 
         jf.pack();
         jf.setVisible(true);

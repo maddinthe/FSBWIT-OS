@@ -1,6 +1,7 @@
 package Unterricht.Jan.maedn.model;
 
 import Unterricht.Jan.maedn.darstellung.*;
+import Unterricht.Jan.maedn.gui.SpielBeginn;
 
 import java.util.*;
 
@@ -79,7 +80,7 @@ public class Spiel {
 	 */
 	public Spiel() {
 
-		SpielBeginn sb = new SpielBeginn(); 
+		SpielBeginn sb = new SpielBeginn();
 		spieler = sb.getStartaufstellung();
 		
 		menue =  new Menue(sb.getScanner());
