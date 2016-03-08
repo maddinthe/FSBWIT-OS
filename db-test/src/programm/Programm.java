@@ -19,9 +19,18 @@ public class Programm {
             e.printStackTrace();
         }
         try{
+            db.dropIfExists("blob");
+            db.dropIfExists("test");
             db.createTable("test");
+            db.createTableMitBlob("blob");
+
+            db.insertOrUpdate("Theilen",1234);
+            db.insertOrUpdate("Dreher",-1234);
+            db.insertOrUpdate("Kertz",2345);
+            db.insertOrUpdate("Kertz",123);
+            db.printTable("test");
         }catch(SQLException e){
-            e.printStackTrace();
+                e.printStackTrace();
         }
     }
 }
