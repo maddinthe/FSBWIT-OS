@@ -36,7 +36,7 @@ public class SpielBeginn extends JDialog {
         MouseAdapter ma=new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                DragLabel dl=(DragLabel)e.getSource();
+                DragLabl dl=(DragLabl)e.getSource();
                 //testen ob aussheralb
                 if(     dl.getX()<-dl.getWidth()/2||
                         dl.getY()<-dl.getHeight()||
@@ -71,25 +71,25 @@ public class SpielBeginn extends JDialog {
             }
         };
 
-        DragLabel dl = new DragLabel(Images.FIGUR_ROT);
+        DragLabl dl = new DragLabl(Images.FIGUR_ROT);
         dl.setSize(dl.getPreferredSize());
         dl.setLocation(groesse / 2, groesse / 2);
         dl.addMouseListener(ma);
         mitte.add(dl);
 
-        dl = new DragLabel(Images.FIGUR_GRUEN);
+        dl = new DragLabl(Images.FIGUR_GRUEN);
         dl.setSize(dl.getPreferredSize());
         dl.setLocation(groesse / 2 - dl.getWidth(), groesse / 2);
         dl.addMouseListener(ma);
         mitte.add(dl);
 
-        dl = new DragLabel(Images.FIGUR_BLAU);
+        dl = new DragLabl(Images.FIGUR_BLAU);
         dl.setSize(dl.getPreferredSize());
         dl.setLocation(groesse / 2, groesse / 2 - dl.getHeight());
         dl.addMouseListener(ma);
         mitte.add(dl);
 
-        dl = new DragLabel(Images.FIGUR_GELB);
+        dl = new DragLabl(Images.FIGUR_GELB);
         dl.setSize(dl.getPreferredSize());
         dl.setLocation(groesse / 2 - dl.getWidth(), groesse / 2 - dl.getHeight());
         dl.addMouseListener(ma);
