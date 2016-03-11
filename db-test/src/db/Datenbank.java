@@ -1,6 +1,8 @@
 package db;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.Socket;
 import java.sql.*;
 import java.util.ArrayList;
@@ -109,36 +111,33 @@ public class Datenbank {
         //Tabellenkopf->Spaltennamen
         int col = rm.getColumnCount();
         int[] max = new int[col];
-        List<List<String>> tabelle=new ArrayList<>(col);
-        for (int i = 0; i <col ; i++) {
-            List<String> spalte=new ArrayList<>();
-            String s=rm.getColumnLabel(i+1);
+        List<List<String>> tabelle = new ArrayList<>(col);
+        for (int i = 0; i < col; i++) {
+            List<String> spalte = new ArrayList<>();
+            String s = rm.getColumnLabel(i + 1);
             spalte.add(s);
             tabelle.add(spalte);
-            max[i]=s.length();
+            max[i] = s.length();
         }
         //Tabelleneinträge
-        if(r.next())
+        if (r.next())
             do {
-                for (int i = 0; i <col ; i++) {
-                    String s=r.getString(i+1);
-                    if(s==null)s="null";
+                for (int i = 0; i < col; i++) {
+                    String s = r.getString(i + 1);
+                    if (s == null) s = "null";
                     tabelle.get(i).add(s);
-                    max[i]=Math.max(max[i],s.length());
+                    max[i] = Math.max(max[i], s.length());
                 }
-            }while (r.next());
+            } while (r.next());
         r.close();
         //ausgabe
-        for (int i = 0; i <tabelle.get(0).size() ; i++) {
-            String s="";
+        for (int i = 0; i < tabelle.get(0).size(); i++) {
+            String s = "";
             for (int j = 0; j < col; j++) {
-                s+="|"+String.format("%-"+max[j]+"s",tabelle.get(j).get(i));
+                s += "|" + String.format("%-" + max[j] + "s", tabelle.get(j).get(i));
             }
-            System.out.println(s+"|");
+            System.out.println(s + "|");
         }
-
-
-
 
 
     }
@@ -150,8 +149,37 @@ public class Datenbank {
                         " name VARCHAR," +
                         " blob BYTEA," +
                         " PRIMARY KEY (name)," +
-                        " FOREIGN KEY (name) REFERENCES test(name)"+
+                        " FOREIGN KEY (name) REFERENCES test(name)" +
                         ")"
         );
+    }
+
+    public void instertOrUpdateBlob(String name, InputStream is) throws SQLException {
+
+        Statement stmt = conn.createStatement();
+        ResultSet r = stmt.executeQuery("SELECT name FROM blob WHERE name='" + name + "'");
+        PreparedStatement ps;
+        if (r.next()) {
+            ps = conn.prepareCall("UPDATE blob SET blob =? WHERE name ='" + name + "'");
+            ps.setBinaryStream(1, is);
+            ps.executeUpdate();
+        } else {
+            ps = conn.prepareStatement("INSERT INTO blob VALUES (?,?)");
+            ps.setBinaryStream(2, is);
+            ps.setString(1, name);
+            ps.execute();
+        }
+    }
+
+    public InputStream getBlob(String name) throws SQLException {
+        Statement stmn = conn.createStatement();
+        ResultSet r = stmn.executeQuery(
+                "SELECT blob" +
+                        " FROM blob" +
+                        " WHERE name='" + name + "'"
+        );
+        if (r.next())  //!!wichtig!!
+            return r.getBinaryStream(1);
+        return null;
     }
 }
