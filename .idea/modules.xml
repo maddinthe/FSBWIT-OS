@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FSBWIT-OS.iml" filepath="$PROJECT_DIR$/FSBWIT-OS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Netzwerk/Netzwerk.iml" filepath="$PROJECT_DIR$/Netzwerk/Netzwerk.iml" />
       <module fileurl="file://$PROJECT_DIR$/db-test/db-test.iml" filepath="$PROJECT_DIR$/db-test/db-test.iml" />
     </modules>
   </component>
