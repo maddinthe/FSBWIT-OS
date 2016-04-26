@@ -24,8 +24,13 @@ public class Programm {
         } catch (ClassNotFoundException e) {
             System.out.println("Datenbanktreiber nicht gefunden!");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            if(e.getMessage().equals("Datenbank existiert nicht!"))
+                try{
+                    db=Datenbank.getInstance("test");
+                }
+                catch (SQLException e1){
+
+                }
         }
         try {
             db.dropIfExists("blob");

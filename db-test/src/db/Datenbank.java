@@ -1,8 +1,6 @@
 package db;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.Socket;
 import java.sql.*;
 import java.util.ArrayList;
@@ -61,6 +59,43 @@ public class Datenbank {
             }
         }
         return datenbank;
+    }
+    public static Datenbank getInstance(String database)  throws SQLException {
+        String host="localhost";
+        int port=5432;
+        String url="jdbc:postgresql://"+host+":"+port+"/";
+        Properties props =new Properties();
+        props.setProperty("user", "postgres");
+        props.setProperty("password","root");
+        try {
+            conn=DriverManager.getConnection(url,props);
+            conn.createStatement().executeUpdate(
+                    "CREATE DATABASE "+database);
+        }catch (SQLException e){
+            throw new SQLException("Zugriff verweigert", e.getSQLState(), e);
+        }
+        try{
+            getInstance();
+        }catch (ClassNotFoundException e){}
+        einlesenScript();
+        return datenbank;
+    }
+
+    private static void einlesenScript() throws SQLException {
+        try (BufferedReader br=new BufferedReader(new FileReader(Datenbank.class.getResource("init.sql").getFile()))){
+            String sqlInsutction="";
+            String zeile;
+            while((zeile=br.readLine())!=null){
+                zeile=zeile.split("--")[0];
+                sqlInsutction+=zeile+" ";
+                if (sqlInsutction.trim().endsWith(";")){
+                    Statement stmt = conn.createStatement();
+                    stmt.execute(sqlInsutction);
+                    sqlInsutction="";
+                }
+            }
+
+        }catch (IOException e){}
     }
 
     public void createTable(String tableName) throws SQLException {
@@ -182,4 +217,6 @@ public class Datenbank {
             return r.getBinaryStream(1);
         return null;
     }
+
+
 }
