@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+
+        #seite {
+            height: 297mm;
+            width: 210mm;
+            padding: 20mm;
+            /*border: solid black 1px;*/
+        }
+
+        #seite > h1 {
+            text-align: center;
+        }
+
+        #persdaten th, #persdaten td {
+            width: 85mm;
+            text-align: left;
+        }
+
+        #KFZDaten th, #KFZDaten td {
+            text-align: left;
+            padding-right: 3mm;
+        }
+
+        #signatur th, #signatur td {
+            text-align: left;
+            width: 85mm;
+            padding-top: 5mm;
+        }
+        #muster{
+            position: absolute;
+            font-size: 100px;
+            bottom: 10cm;
+            left: 7cm;
+            opacity: 0.4;
+            transform: rotate(-45deg);
+        }
+        footer td{
+            text-align: left;
+            font-size: 8px;
+        }
+    </style>
+</head>
+<body>
+<div id="muster">
+    Kopie
+</div>
+<section id="seite">
+    <h1>Ostesee-KFZ-Service GmbH <br/>
+        - Kaufvertag -</h1>
+
+    <div id="persdaten">
+        <table>
+            <tr>
+                <th>Verkäufer</th>
+                <th>Käufer</th>
+            </tr>
+            <tr>
+                <td>Herr Ochsenknecht, Uwe</td>
+                <td>Frau Müller, Ilona</td>
+            </tr>
+            <tr>
+                <td>Teststr. 1</td>
+                <td>Mustermeisterstraße 123</td>
+            </tr>
+            <tr>
+                <td>12345</td>
+                <td>23456</td>
+            </tr>
+            <tr>
+                <td>Musterhausen</td>
+                <td>Musterstadt</td>
+            </tr>
+            <tr>
+                <td>Deutschland</td>
+                <td>Deutschland</td>
+            </tr>
+        </table>
+    </div>
+    <hr/>
+    <div id="KFZDaten">
+        <h3>Kraftfahrzeug</h3>
+        <table>
+            <tr>
+                <td>Hersteller/Modell</td>
+                <td>Nissan Testan</td>
+            </tr>
+            <tr>
+                <td>FIN</td>
+                <td>12345678901234567</td>
+            </tr>
+            <tr>
+                <td>Hubraum in ccm</td>
+                <td> 1397</td>
+            </tr>
+            <tr>
+                <td>KW/PS</td>
+                <td>100/136</td>
+            </tr>
+            <tr>
+                <td>KFZ-Brief-Nr.</td>
+                <td>J123456</td>
+            </tr>
+            <tr>
+                <td>Erstzulassung</td>
+                <td>03/06</td>
+            </tr>
+            <tr>
+                <td>Abgelesener KM-Stand</td>
+                <td>123000</td>
+            </tr>
+            <tr>
+                <td>Amtl. Kennzeichen</td>
+                <td>HRO-TK-666</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th>Kaufpreis: 4800€</th>
+            </tr>
+            <tr>
+                <td>Viertausendachthundert Euro</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/>Differenzbesteuerung gem. §25a UStG</td>
+            </tr>
+        </table>
+        <p>Das Kraftfahrzeug wurde besichtigt und Probegefahren. Der Verkäufer hat den Kaufpreis erhalten. Dem Käufer
+            wurden Kraftfahrzeug, Fahrzeugschein und Fahrzeugschlüssel übergeben.
+            <br/>Der Käufer verpflichtet sich, das o.g. Kraftfahrzeug unverzüglich ab- /umzumelden.</p>
+    </div>
+    <hr/>
+    <div id="Versicherung">
+        <h3>Versicherung</h3>
+        <table>
+            <tr>
+                <td><input type="checkbox" checked/></td>
+                <td>Unfallschäden lt. Vorbesitzer: Auto kaputt.</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td> Sondervereinbarungen: keine</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>Der Ausführer der Waren, auf die sich dieses handelspapier bezieht, erklärt, dass diese
+                    Waren, soweit nicht anders angegeben, präferenzgünstige EWR-Ursprungswaren sind.
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>Hiermit versichere ich, den o.g. PKW/LKW als Abnehmer in des übrige Gemeinschaftsgebiet
+                    _______ zu befördern(§17a(2)Nr.4 USt DV)
+                </td>
+            </tr>
+        </table>
+    </div>
+    <hr/>
+    <div id="signatur">
+        <table>
+            <tr>
+                <th>Verkäufer</th>
+                <th>Käufer</th>
+            </tr>
+            <tr>
+                <td>Ort,Datum</td>
+                <td>Ort,Datum</td>
+            </tr>
+            <tr>
+                <td>Unterschrift
+                    <hr/>
+                </td>
+                <td>Unterschrift
+                    <hr/>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+<footer><table>
+    <tr><td>Ostsee-Kfz-Service GmbH, Carl-Hopp-Straße 12, 18069 Rostock</td></tr>
+    <tr><td>Michael Grewe</td></tr>
+    <tr><td>Tel.: 01234-145646 E-Mail.:OKFZS@FSBWIT.intern</td></tr>
+    <tr><td>UStID: 1235698776432187435687313</td></tr>
+    <tr><td>IBAN: DE2112345678000012345678 BIC: DELUDE55XXX</td></tr>
+</table>
+
+</footer>
+</section>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-package db;
+package umlGrund.db;
 
 import java.io.*;
 import java.net.Socket;

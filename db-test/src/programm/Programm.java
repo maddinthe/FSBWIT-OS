@@ -1,16 +1,11 @@
 package programm;
 
-import db.Datenbank;
+import umlGrund.db.Datenbank;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 
 /**
@@ -43,7 +38,7 @@ public class Programm {
 
             db.createTableMitBlob("blob");
             try {
-                FileInputStream fis = new FileInputStream(".\\db-test\\bild.jpg");
+                FileInputStream fis = new FileInputStream(".\\umlGrund.db-test\\bild.jpg");
                 db.instertOrUpdateBlob("Theilen", fis);
                 fis.close();
             } catch (IOException e) {
@@ -51,7 +46,7 @@ public class Programm {
             }
 
             try {
-                FileInputStream fis = new FileInputStream(".\\db-test\\bild.jpg");
+                FileInputStream fis = new FileInputStream(".\\umlGrund.db-test\\bild.jpg");
                 db.instertOrUpdateBlob("Theilen", fis);
                 fis.close();
             } catch (IOException e) {
